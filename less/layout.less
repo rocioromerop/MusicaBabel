@@ -1,11 +1,11 @@
 // Layout container
 .container {
-    width: @desktop-width;
+    width: @mobile-width;
     margin: auto;
-    .if-is-mobile({
-        width: 100%;
-    }
-    );
+   // .if-is-mobile({
+    //    width: 100%;
+    //}
+  //  );
 }
 
 //grid 
@@ -15,9 +15,9 @@
         width: @i * (100% / @columns);
         float: left;
         display: block;
-        .if-is-mobile({
-        	width:100%;
-        	});
+       // .if-is-mobile({
+        //	width:100%;
+        //	});
     }
     .grid-generator(@columns, (@i + 1));
 }

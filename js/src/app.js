@@ -31,7 +31,6 @@ $(document).ready(function(){ //Cuando la página se ha cargado por completo
 				artist: artist,
 				song: song,
 				url: url
-
 			}),
 			dataType: 'json',
 			contentType: 'application/json',
@@ -45,6 +44,10 @@ $(document).ready(function(){ //Cuando la página se ha cargado por completo
 		});
 
 		return false;
-
 	});
+
+
+
+
+
 });
