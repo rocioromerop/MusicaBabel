@@ -57,19 +57,32 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     var artist = data[i].artist;
                     var song = data[i].song;
                     var url = data[i].url || "";
-                    html += "<li>";
+                    var id = data[i].id;
+                    html += '<li>';
                     html += artist + " ";
                     html += song + " ";
-                    html += ' <i class="fa fa-play-circle"></i>';
-                    html += ' <i class="fa fa-pencil"></i>';
-                    html += ' <i class="fa fa-trash"></i>';
+                    html += ' <i class="fa fa-play-circle" data-songid ="' +id+ '"></i>';
+                    html += ' <i class="fa fa-pencil" data-songid ="' +id+ '"></i>';
+                    html += ' <i class="fa fa-trash delete" data-songid ="' +id+ '"></i>';
                     html += ' </li>';
                 }
                 $(".lista").html(html); // innerHTML=html
             }
         });
     }
+
     reloadLista();
 
+    $(".lista").on("click", ".delete", function(){
+		var self = this;
+		var id = $(self).data("songid"); 
+		$.ajax({
+			url:"/api/songs/" + id,
+			method: "delete",
+			success: function(){
+				$(self).parent().remove();
+			}
+		});
+    });
 
 });
