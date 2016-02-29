@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Musica BABEL</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <header class="web header">
+        <div class="container">
+            <div class="row">
+                <div class="col-phone-6">
+                    <div class="brand">MúsicaBabel</div>
+                </div>
+                <div class="col-phone-6"><i class="fa fa-plus-square"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="web main">
+        <form novalidate>
+            <div>
+                <input type="text" id="artist" name="artist" placeholder="Nombre del artista" required class="auto-focus">
+            </div>
+            <div>
+                <input type="text" id="title" name="title" placeholder="Título de la canción" required>
+            </div>
+            <div>
+                <input type="url" id="song_url" name="song_url" placeholder="URL de la canción" pattern="^https?:ht//[a-z0-9]+\.[a-z0-9]+/.+">
+            </div>
+            <button type="submit">Añadir canción</button>
+        </form>
+        <div class="container lista">
+
+
+        	
+        </div>
+    </main>
+    <footer class="web footer">
+    </footer>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="js/src/app.js"></script>
+</body>
+
+</html>
