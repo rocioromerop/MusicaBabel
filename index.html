@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Musica BABEL</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -22,6 +23,7 @@
     </header>
     <main class="web main">
         <form novalidate>
+            <input type="hidden" id="elementoId">
             <div>
                 <input type="text" id="artist" name="artist" placeholder="Nombre del artista" required class="auto-focus">
             </div>
@@ -32,6 +34,7 @@
                 <input type="url" id="song_url" name="song_url" placeholder="URL de la canción" pattern="^https?:ht//[a-z0-9]+\.[a-z0-9]+/.+">
             </div>
             <button type="submit">Añadir canción</button>
+            <button type="button" class="buttonCancelar">Cancelar</button>
         </form>
         <div class="container lista">
 

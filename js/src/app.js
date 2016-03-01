@@ -4,12 +4,41 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     $(".auto-focus").focus();
 
     $("form").hide();
+   
+    var lista=$(".lista");
+    var formulario=$("form");
+    var controlMostrarForm=false; //Para controlar si se ha pulsado ya anteriormente el botón de +
 
     $(".add-button").on("click", function(){
-    	$("form").show();
+        $("#artist").val("");
+        $("#title").val("");
+        $("#song_url").val("");
+        $("#elementoId").val("");
+        if(controlMostrarForm==false){
+    	   formulario.show();
+           lista.hide();
+           controlMostrarForm=true;
+        }
+        else{
+            formulario.hide();
+            lista.show();
+            controlMostrarForm=false;
+        }
     });
 
+    $(".buttonCancelar").on("click", function(){ //Botón cancelar del formulario
+        formulario.hide();
+        lista.show();
+        $("#artist").val("");
+        $("#title").val("");
+        $("#song_url").val("");
+        $("#elementoId").val("");
+    });
+
+
     $("form").on("submit", function() {
+        var id=$("#elementoId").val(); //campo oculto del formulario con el id
+
         var artist = $.trim($("#artist").val());
         if (artist == "") {
             alert("El artista no puede estar vacío");
@@ -30,25 +59,52 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
             return false;
         }
 
-        $.ajax({
-            method: 'post',
-            url: '/api/songs/',
-            data: JSON.stringify({
-                artist: artist,
-                song: song,
-                url: url
-            }),
-            dataType: 'json',
-            contentType: 'application/json',
-            success: function() {
-            	$("form").hide();
-            	reloadLista();
-            },
-            error: function() {
-                alert("Se ha producido un error");
-            }
-
+        if(id==""){ //Se va a añadir una nueva
+            $.ajax({
+                method: 'post',
+                url: '/api/songs/',
+                data: JSON.stringify({
+                    artist: artist,
+                    song: song,
+                    url: url
+                }),
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function() {
+                    formulario.hide();
+                    lista.show();
+                    reloadLista();
+                },
+                error: function() {
+                    alert("Se ha producido un error");
+                }
         });
+        }
+
+        else{ //Se va a modificar una
+            $.ajax({
+                url: "/api/songs/" + id,
+                method: 'put',
+                data: JSON.stringify({
+                    artist: artist,
+                    song: song,
+                    url: url
+                }),
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function(){
+                        reloadLista();
+                        formulario.hide();
+                        lista.show();
+                        controlMostrarForm=false;
+                        //Al acabar, actualizar la lista y quitar el formulario
+                        $("#artist").val("");
+                        $("#title").val("");
+                        $("#song_url").val("");
+                        $("#elementoId").val("");
+                }    
+            });
+        }
 
         return false;
     });
@@ -73,7 +129,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     html += ' <i class="fa fa-trash delete-trash" data-songid ="' +id+ '"></i>';
                     html += ' </li>';
                 }
-                $(".lista").html(html); // innerHTML=html
+                lista.html(html); // innerHTML=html
             }
         });
     }
@@ -94,21 +150,32 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
 
 	$(".lista").on("click", ".modify-pencil", function(){ //Si se añaden elementos a la lista, añadir evento al icono del lapiz de modificar elemento
 		//mostrar el formulario y en el formulario añadir al botón de "modificar" el evento de modificar
-		$("form").show();
+        var elementoI=this;
+        var idElemento=$(elementoI).data("songid");
+        $.ajax({ //Coger los datos de ese id desde la base de datos
+            url: "/api/songs/" + idElemento,
+            method:"get",
+            success: function(data){
+                console.log("Canciones recuperadas2", data);
+                //Obtener los valores de ese elemento para ponerlos en el cuestionario
+                var artist;
+                var song;
+                var url;
+                artist=data.artist;
+                song=data.song;
+                url=data.url;
+                
+                //Ahora poner esos valores en los valores del cuestionario
+                $("#artist").val(artist);
+                $("#title").val(song);
+                $("#song_url").val(url);
+                $("#elementoId").val(idElemento);
+            }
+        });
+
+		formulario.show();
+        lista.hide();
+
     });
-
-    function modifySong(){ //Función a llamar cuando se va a modificar una canción
-    	$.ajax({
-    		url: "/api/songs/" + id,
-    		method: "put",
-    		data: JSON.stringify({
-                artist: artist,
-                song: song,
-                url: url
-            }),
-            success: reloadLista() //Al acabar, actualizar la lista y quitar el formulario
-    	});
-    };
-
 
 });
