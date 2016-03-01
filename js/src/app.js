@@ -1,11 +1,13 @@
 $(document).ready(function() { //Cuando la página se ha cargado por completo
     //Ponemos el foco en el primer input
     $(".auto-focus").focus();
-    $("form").hide();
    
     var lista=$(".lista");
     var formulario=$("form");
     var controlMostrarForm=false; //Para controlar si se ha pulsado ya anteriormente el botón de +  
+    var elementoAudio=$("audio");
+
+    formulario.hide();
 
     $(".add-button").on("click", function(){
         $("#artist").val("");
@@ -15,11 +17,13 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         if(controlMostrarForm==false){
     	   formulario.show();
            lista.hide();
+           elementoAudio.hide();
            controlMostrarForm=true;
         }
         else{
             formulario.hide();
             lista.show();
+            elementoAudio.show();
             controlMostrarForm=false;
         }
     });
@@ -27,6 +31,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     $(".buttonCancelar").on("click", function(){ //Botón cancelar del formulario
         formulario.hide();
         lista.show();
+        elementoAudio.show();
         $("#artist").val("");
         $("#title").val("");
         $("#song_url").val("");
@@ -52,7 +57,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
 
         var pattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/ig;
 
-        if (url == "" && pattern.test(url) == false) {
+        if (url == "" || pattern.test(url) == false) {
             alert("La url de la canción no es válida");
             return false;
         }
@@ -72,6 +77,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     formulario.hide();
                     lista.show();
                     reloadLista();
+                    elementoAudio.show();
                 },
                 error: function() {
                     alert("Se ha producido un error");
@@ -93,6 +99,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 success: function(){
                         reloadLista();
                         formulario.hide();
+                        elementoAudio.show();
                         lista.show();
                         controlMostrarForm=false;
                         //Al acabar, actualizar la lista y quitar el formulario
@@ -170,8 +177,10 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 $("#elementoId").val(idElemento);
             }
         });
-		formulario.show();
         lista.hide();
+        elementoAudio.hide();
+		formulario.show();
+        
     });
 
     $(".lista").on("click", ".play-button", function(){
@@ -184,12 +193,9 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 //Obtener la url de este elemento para poder reproducirlo
                 var url;
                 url=data.url;
-            
                 //Ahora poner esa url en el elemento audio 
-                $("audio").attr("src",url);
+                elementoAudio.attr("src", url);
             }
         });
-
-
     });
 });
