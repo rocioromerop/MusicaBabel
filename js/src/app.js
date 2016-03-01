@@ -1,13 +1,11 @@
 $(document).ready(function() { //Cuando la página se ha cargado por completo
-
     //Ponemos el foco en el primer input
     $(".auto-focus").focus();
-
     $("form").hide();
    
     var lista=$(".lista");
     var formulario=$("form");
-    var controlMostrarForm=false; //Para controlar si se ha pulsado ya anteriormente el botón de +
+    var controlMostrarForm=false; //Para controlar si se ha pulsado ya anteriormente el botón de +  
 
     $(".add-button").on("click", function(){
         $("#artist").val("");
@@ -172,10 +170,26 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 $("#elementoId").val(idElemento);
             }
         });
-
 		formulario.show();
         lista.hide();
-
     });
 
+    $(".lista").on("click", ".play-button", function(){
+        var elementoI=this;
+        var idElemento=$(elementoI).data("songid");
+        $.ajax({ //Coger los datos de ese id desde la base de datos
+            url: "/api/songs/" + idElemento,
+            method:"get",
+            success: function(data){
+                //Obtener la url de este elemento para poder reproducirlo
+                var url;
+                url=data.url;
+            
+                //Ahora poner esa url en el elemento audio 
+                $("audio").attr("src",url);
+            }
+        });
+
+
+    });
 });
