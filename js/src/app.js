@@ -126,13 +126,16 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     var song = data[i].song;
                     var url = data[i].url || "";
                     var id = data[i].id;
+                    html +='<ul>';
                     html += '<li>';
+                    html += '<i class="fa fa-music"></i>' + " ";
                     html += artist + " ";
                     html += song + " ";
-                    html += ' <i class="fa fa-play-circle play-button" data-songid ="' +id+ '"></i>';
-                    html += ' <i class="fa fa-pencil modify-pencil" data-songid ="' +id+ '"></i>';
-                    html += ' <i class="fa fa-trash delete-trash" data-songid ="' +id+ '"></i>';
+                    html += ' <i class="fa fa-play-circle play-button" data-songid fa-lg ="' +id+ '"></i>';
+                    html += ' <i class="fa fa-pencil modify-pencil" data-songid fa-lg ="' +id+ '"></i>';
+                    html += ' <i class="fa fa-trash delete-trash" data-songid fa-lg ="' +id+ '"></i>';
                     html += ' </li>';
+                    html +='</ul>';
                 }
                 lista.html(html); // innerHTML=html
             }
