@@ -1,8 +1,9 @@
-.if-is-mobile(@rules){
-  @media screen and (max-width: (@desktop-width - 1)){
+.if-is-desktop(@rules){
+  @media screen and (max-width: (@desktop-width)){
     @rules();
   }
 }
+
 .clearfix() {
   &:before,
   &:after {
