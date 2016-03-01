@@ -1,0 +1,65 @@
+html{
+  background-color: #ffffff;
+}
+
+input form{
+	padding: 0;
+	margin: 0;
+}
+
+form{
+  text-align: center;	
+  margin: 30px auto;
+  width: 250px; 
+  height: 250px;  
+  border-radius: 8px/7px; 
+  background-color: @window-color; 
+  box-shadow:0 4px 10px 4px rgba(19, 35, 47,.3); 
+  border: solid 1px #cbc9c9;
+}
+
+input[type=text],input[type=password],input[type=url]{
+  width: 180px; 
+  height: 34px;
+  box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
+  border:1px solid @gray-light;
+  margin-top: 20px; 
+  padding-left: 10px;
+  background: none;
+  transition:border-color .25s ease, box-shadow .25s ease;
+  &:focus {
+		outline:0;
+		border-color:$main;
+  }
+}
+
+i{
+	&:hover{
+		cursor:pointer;
+	}
+}
+
+
+button {
+  border:0;
+  outline:none;
+  border-radius:0;
+  margin-top: 15px;
+  padding: 15px 5px 15px 5px;
+  font-size:15px;
+  font-weight:@bold;
+  letter-spacing:.1em;
+  background:@main;
+  color:@white;
+  transition:all.5s ease;
+  &:hover, &:focus {
+    background:@main-dark;
+  }
+}
+
+body {
+	background-color: @body-color;
+}
+
+
+

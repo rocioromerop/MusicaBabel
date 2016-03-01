@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Musica BABEL</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -13,14 +14,19 @@
         <div class="container">
             <div class="row">
                 <div class="col-phone-6">
-                    <div class="brand">MúsicaBabel</div>
+                    <div class="wrapper-brand">
+                        <div class="brand">MusicaBabel</div>
+                    </div>
                 </div>
-                <div class="col-phone-6"><i class="fa fa-plus-square"></i>
+                <div class="col-phone-6">
+                    <div class="wrapper-icon">
+                        <i class="fa fa-plus-square fa-lg"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
-    <main class="web main">
+    <main class="webmain">
         <form novalidate>
             <div>
                 <input type="text" id="artist" name="artist" placeholder="Nombre del artista" required class="auto-focus">
@@ -34,9 +40,6 @@
             <button type="submit">Añadir canción</button>
         </form>
         <div class="container lista">
-
-
-        	
         </div>
     </main>
     <footer class="web footer">
