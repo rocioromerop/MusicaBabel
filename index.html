@@ -14,16 +14,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-phone-6">
-                    <div class="brand">MúsicaBabel</div>
+                    <div class="wrapper-brand">
+                        <div class="brand">MusicaBabel</div>
+                    </div>
                 </div>
-                <div class="col-phone-6"><i class="fa fa-plus-square add-button"></i>
+                <div class="col-phone-6">
+                    <div class="wrapper-icon">
+                        <i class="fa fa-plus-square fa-lg add-button"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
-    <main class="web main">
+    <main class="webmain">
         <form novalidate>
-            <input type="hidden" id="elementoId">
+            <input type="hidden" id="elementoId"    > 
             <div>
                 <input type="text" id="artist" name="artist" placeholder="Nombre del artista" required class="auto-focus">
             </div>
@@ -44,7 +49,6 @@
         </div>
     </main>
     <footer class="web footer">
-     
     </footer>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="js/src/app.js"></script>
