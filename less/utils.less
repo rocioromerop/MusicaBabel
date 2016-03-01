@@ -1,5 +1,5 @@
 .if-is-desktop(@rules){
-  @media screen and (max-width: (@desktop-width)){
+  @media screen and (min-width:(@mobile-width + 1)){
     @rules();
   }
 }

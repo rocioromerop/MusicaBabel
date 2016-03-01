@@ -1,4 +1,5 @@
 $(document).ready(function() { //Cuando la página se ha cargado por completo
+
     //Ponemos el foco en el primer input
     $(".auto-focus").focus();
    
@@ -7,25 +8,33 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     var controlMostrarForm=false; //Para controlar si se ha pulsado ya anteriormente el botón de +  
     var elementoAudio=$("audio");
 
-    formulario.hide();
+    var body=$("body");
+
+    body.addClass("show_list");
+
+    reloadLista();
 
     $(".add-button").on("click", function(){
-        $("#artist").val("");
-        $("#title").val("");
-        $("#song_url").val("");
-        $("#elementoId").val("");
         if(controlMostrarForm==false){
-    	   formulario.show();
-           lista.hide();
-           elementoAudio.hide();
-           controlMostrarForm=true;
+            $("#artist").val("");
+            $("#title").val("");
+            $("#song_url").val("");
+            $("#elementoId").val("");
+            body.addClass("show_form");
+            body.removeClass("show_list");
+            controlMostrarForm=true;
         }
         else{
-            formulario.hide();
-            lista.show();
-            elementoAudio.show();
+            $("#artist").val("");
+            $("#title").val("");
+            $("#song_url").val("");
+            $("#elementoId").val("");
+            body.addClass("show_list");
+            body.removeClass("show_form");
             controlMostrarForm=false;
         }
+
+       
     });
 
     $(".buttonCancelar").on("click", function(){ //Botón cancelar del formulario
@@ -36,8 +45,10 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         $("#title").val("");
         $("#song_url").val("");
         $("#elementoId").val("");
-    });
 
+        body.addClass("show_list");
+        body.removeClass("show_form");
+    });
 
     $("form").on("submit", function() {
         var id=$("#elementoId").val(); //campo oculto del formulario con el id
@@ -74,8 +85,8 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 dataType: 'json',
                 contentType: 'application/json',
                 success: function() {
-                    formulario.hide();
-                    lista.show();
+                    body.addClass("show_list");
+                    body.removeClass("show_form");
                     reloadLista();
                     elementoAudio.show();
                 },
@@ -98,9 +109,9 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 contentType: 'application/json',
                 success: function(){
                         reloadLista();
-                        formulario.hide();
+                        body.addClass("show_list");
+                        body.removeClass("show_form");
                         elementoAudio.show();
-                        lista.show();
                         controlMostrarForm=false;
                         //Al acabar, actualizar la lista y quitar el formulario
                         $("#artist").val("");
@@ -110,7 +121,6 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 }    
             });
         }
-
         return false;
     });
 
@@ -139,7 +149,6 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         });
     }
 
-    reloadLista();
 
     $(".lista").on("click", ".delete-trash", function(){ //Si se añaden elementos de la lista, añadir evento al icono de la basura
 		var self = this;
@@ -177,10 +186,10 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 $("#elementoId").val(idElemento);
             }
         });
-        lista.hide();
+
+        body.addClass("show_form");
+        body.removeClass("show_list");
         elementoAudio.hide();
-		formulario.show();
-        
     });
 
     $(".lista").on("click", ".play-button", function(){
