@@ -18,6 +18,7 @@ form{
   border: solid 1px #cbc9c9;
 }
 
+
 input[type=text],input[type=password],input[type=url]{
   width: 180px; 
   height: 34px;
@@ -29,7 +30,7 @@ input[type=text],input[type=password],input[type=url]{
   transition:border-color .25s ease, box-shadow .25s ease;
   &:focus {
 		outline:0;
-		border-color:$main;
+		border-color:@main;
   }
 }
 
@@ -59,6 +60,32 @@ button {
 
 body {
 	background-color: @body-color;
+  &.show_form{
+    form{
+      display: block;
+    }
+    .lista{
+      display: none;
+      .if-is-desktop({
+        display: block;
+      });
+    }
+    audio{
+      display: none;
+      .if-is-desktop({
+        display: block;
+        });
+    }
+  }
+
+  &.show_list{
+    .lista{
+      display: block;
+    }
+    form{
+      display: none;
+    }
+  }
 }
 
 
