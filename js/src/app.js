@@ -281,4 +281,17 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
        var urlNueva=$(elementoAReproducir).find(".delete-trash").data("url");
        playSong(urlNueva);
     });
+
+
+    previousButton("click", function(){
+        var elementoReproducido =  $(lista).find(".reproduciendo");
+        
+            $(elementoReproducido).removeClass("reproduciendo");
+            var elementoAReproducir= $(elementoReproducido).prev("li");
+            elementoAReproducir.addClass("reproduciendo");
+            playSong(urlNueva);
+
+         
+
+    })
 }); //fin del $(document).ready()
