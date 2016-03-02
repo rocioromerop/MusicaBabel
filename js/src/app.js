@@ -11,7 +11,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     var body = $("body");
 
     body.addClass("show_list");
-
+    body.addClass("show_reproductor");
     reloadLista();
 
     $(".add-button").on("click", function() {
@@ -22,6 +22,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
             $("#elementoId").val("");
             body.addClass("show_form");
             body.removeClass("show_list");
+            body.removeClass("show_reproductor");
             controlMostrarForm = true;
         } else {
             $("#artist").val("");
@@ -29,24 +30,21 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
             $("#song_url").val("");
             $("#elementoId").val("");
             body.addClass("show_list");
+            body.addClass("show_reproductor");
             body.removeClass("show_form");
             controlMostrarForm = false;
         }
 
-
     });
 
     $(".buttonCancelar").on("click", function() { //Botón cancelar del formulario
-        formulario.hide();
-        lista.show();
-        elementoAudio.show();
         $("#artist").val("");
         $("#title").val("");
         $("#song_url").val("");
         $("#elementoId").val("");
-
         body.addClass("show_list");
         body.removeClass("show_form");
+        body.addClass("show_reproductor");
     });
 
     $("form").on("submit", function() {
@@ -87,7 +85,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     body.addClass("show_list");
                     body.removeClass("show_form");
                     reloadLista();
-                    elementoAudio.show();
+                    body.addClass("show_reproductor");
                 },
                 error: function() {
                     alert("Se ha producido un error");
@@ -108,7 +106,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     reloadLista();
                     body.addClass("show_list");
                     body.removeClass("show_form");
-                    elementoAudio.show();
+                    body.addClass("show_reproductor");
                     controlMostrarForm = false;
                     //Al acabar, actualizar la lista y quitar el formulario
                     $("#artist").val("");
@@ -155,7 +153,6 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     html += ' </li>';
                     html += '</div>';
                     html += '</div>';
-
                 }
                 html += '</ul>';
                 lista.html(html); // innerHTML=html
@@ -192,7 +189,6 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 artist = data.artist;
                 song = data.song;
                 url = data.url;
-
                 //Ahora poner esos valores en los valores del cuestionario
                 $("#artist").val(artist);
                 $("#title").val(song);
@@ -200,10 +196,10 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 $("#elementoId").val(idElemento);
             }
         });
-
         body.addClass("show_form");
         body.removeClass("show_list");
-        elementoAudio.hide();
+        body.removeClass("show_reproductor");
+        
     });
 
     $(".lista").on("click", ".play-button", function() {

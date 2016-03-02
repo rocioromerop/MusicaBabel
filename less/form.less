@@ -59,9 +59,8 @@ button {
   text-align:center;
 }
  
-
 body {
-
+  margin: 0;
 	background-color: @body-color;
   &.show_form{
     form{
@@ -90,7 +89,15 @@ body {
     }
   }
 
+  &.show_reproductor{
+    audio{
+      display: block;
+    }
+
+  }
+
 }
+
 
 
 
