@@ -147,9 +147,9 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     html += '</div>';
                     html += '<div class="col-phone-6">';
                     html += '<div class="icon">';
-                    html += ' <i class="fa fa-play-circle play-button" fa-lg data-songid="' + id + '"></i>';
-                    html += ' <i class="fa fa-pencil modify-pencil" fa-lg data-songid="' + id + '"></i>';
-                    html += ' <i class="fa fa-trash delete-trash" fa-lg data-songid="' + id + '"></i>';
+                    html += ' <i class="fa fa-play-circle play-button fa-lg" data-songid="' + id + '"></i>';
+                    html += ' <i class="fa fa-pencil modify-pencil fa-lg" data-songid="' + id + '"></i>';
+                    html += ' <i class="fa fa-trash delete-trash fa-lg" data-songid="' + id + '"></i>';
                     html += '</div>';
                     html += '</div>';
                     html += ' </li>';
@@ -198,12 +198,14 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 $("#title").val(song);
                 $("#song_url").val(url);
                 $("#elementoId").val(idElemento);
+            
+
             }
         });
 
         body.addClass("show_form");
         body.removeClass("show_list");
-        elementoAudio.hide();
+        //elementoAudio.hide();
     });
 
     $(".lista").on("click", ".play-button", function() {
