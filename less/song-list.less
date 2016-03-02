@@ -6,12 +6,12 @@ h2 {
     padding-left: 10px;
     background-color: @second;
 }
+
 ul {
     list-style-type: none;
     padding: 0;
-    margin:0;
+    margin: 0;
     li {
-        
         font-family: @body-font-family;
         overflow: hidden;
         background-color: white;
@@ -19,35 +19,33 @@ ul {
         margin-top: 0px;
         border-width: 0 1px 1px 1px;
         border-style: solid;
-        border-color:@gray;
+        border-color: @gray;
         transition: background-color 250ms;
-        &:hover{
+        &:hover {
             background-color: @gray-light;
         }
-
+        &.reproduciendo{
+            background-color: @third;
+        }
         i {
             color: @mark;
-    
         }
-
-    label{
-        border-right:1px solid @gray;
-        overflow: hidden;
-        padding: 0 10px 0 10px;
-
-    }
-
-    .data{
-    	.left-align();
-       overflow:hidden;
-       text-overflow: ellipsis;
-    	margin: 10px 10px 10px 10px;
-    }
-
-    .icon{
-    	.right-align();
-    	margin: 10px 10px 10px 10px;
-    }
-        
+        label {
+            border-width: 0 1px 0 1px;
+            border-style: solid;
+            border-color: @gray;
+            overflow: hidden;
+            padding: 0 10px 0 10px;
+        }
+        .data {
+            .left-align();
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 10px 10px 10px 10px;
+        }
+        .icon {
+            .right-align();
+            margin: 10px 10px 10px 10px;
+        }
     }
 }

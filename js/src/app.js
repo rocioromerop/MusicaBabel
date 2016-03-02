@@ -136,17 +136,17 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     html += '<li>';
                     html += '<div class="container">';
                     html += '<div class="row">';
-                    
+
                     html += '<div class="col-phone-6">';
                     html += '<div class="data">';
                     html += '<i class="fa fa-music"></i>' + " ";
                     html += '<label>'
                     html += song + " ";
-                     html += '</label>'
-                     html += '<label>'
-                   
-                     html += artist + " ";
-                     html += '</label>'
+                    html += '</label>'
+                    html += '<label>'
+
+                    html += artist + " ";
+                    html += '</label>'
                     html += '</div>';
                     html += '</div>';
                     html += '<div class="col-phone-6">';
@@ -158,7 +158,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     html += '</div>';
                     html += '</div>';
                     html += '</div>';
-                    
+
                     html += ' </li>';
                 }
                 html += '</ul>';
@@ -205,11 +205,12 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         });
         body.addClass("show_form");
         body.removeClass("show_list");
-        body.removeClass("show_reproductor"); 
+        body.removeClass("show_reproductor");
     });
 
-    function playSong(url){
+    function playSong(url) {
         elementoAudio.attr("src", url);
+
         console.log("playSong()", url);
     }
 
@@ -218,7 +219,9 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         var elementoI = this;
         var idElemento = $(elementoI).data("songid");
         var elementoLi = $(elementoI).parents("li");
+
         var elementoConReproduciendo=$(".lista").find(".reproduciendo");
+
         elementoConReproduciendo.removeClass("reproduciendo");
         $(elementoLi).addClass("reproduciendo");
 
@@ -237,10 +240,12 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
 
     // Para que al hacer doble click en el elemento de la lista se reproduzca la canción
 
-    $(".lista").on("dblclick", "li", function(){
+    $(".lista").on("dblclick", "li", function() {
         var elementoLi = this;
         var idElemento = $(elementoLi).find(".delete-trash").data("songid");
+
         var elementoConReproduciendo=$(".lista").find(".reproduciendo");
+
         elementoConReproduciendo.removeClass("reproduciendo");
         $(elementoLi).addClass("reproduciendo");
 
@@ -250,7 +255,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
             success: function(data) {
                 //Obtener la url de este elemento para poder reproducirlo
                 var url;
-                url = data.url;                
+                url = data.url;
                 //Ahora poner esa url en el elemento audio 
                 playSong(url);
             }
@@ -264,6 +269,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
        $(elementoAReproducir).addClass("reproduciendo");
        var urlNueva=$(elementoAReproducir).find(".delete-trash").data("url");
        playSong(urlNueva);
+
     });
 
 
