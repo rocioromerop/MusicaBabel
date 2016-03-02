@@ -7,7 +7,6 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     var formulario = $("form");
     var controlMostrarForm = false; //Para controlar si se ha pulsado ya anteriormente el botón de +  
     var elementoAudio = $("audio");
-
     var body = $("body");
 
     body.addClass("show_list");
@@ -86,6 +85,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     body.removeClass("show_form");
                     reloadLista();
                     body.addClass("show_reproductor");
+                    controlMostrarForm = false;
                 },
                 error: function() {
                     alert("Se ha producido un error");
@@ -132,7 +132,6 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     var song = data[i].song;
                     var url = data[i].url || "";
                     var id = data[i].id;
-                
                     html += '<div class="container">';
                     html += '<div class="row">';
                     html += '<li>';
@@ -145,9 +144,9 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     html += '</div>';
                     html += '<div class="col-phone-6">';
                     html += '<div class="icon">';
-                    html += ' <i class="fa fa-play-circle play-button fa-lg" data-songid="' + id + '"></i>';
-                    html += ' <i class="fa fa-pencil modify-pencil fa-lg" data-songid="' + id + '"></i>';
-                    html += ' <i class="fa fa-trash delete-trash fa-lg" data-songid="' + id + '"></i>';
+                    html += ' <i class="fa fa-play-circle play-button fa-lg" data-songid="' + id + '" data-url="' + url + '"></i>';
+                    html += ' <i class="fa fa-pencil modify-pencil fa-lg" data-songid="' + id + '" data-url="' + url + '"></i>';
+                    html += ' <i class="fa fa-trash delete-trash fa-lg" data-songid="' + id + '" data-url="' + url + '"></i>';
                     html += '</div>';
                     html += '</div>';
                     html += ' </li>';
@@ -194,18 +193,16 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 $("#title").val(song);
                 $("#song_url").val(url);
                 $("#elementoId").val(idElemento);
-            
-
             }
         });
+
         body.addClass("show_form");
         body.removeClass("show_list");
-
         body.removeClass("show_reproductor");
         
     });
 
-    $(".lista").on("click", ".play-button", function() {
+    $(".lista").on("click", ".play-button", function() { //Para que el botón del play reproduzca la canción
         var elementoI = this;
         var idElemento = $(elementoI).data("songid");
         $.ajax({ //Coger los datos de ese id desde la base de datos
@@ -220,4 +217,23 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
             }
         });
     });
-});
+
+    // Para que al hacer doble click en el elemento de la lista se reproduzca la canción
+
+    $(".lista").on("dblclick", "li", function(){
+        var elementoLi = this;
+        var idElemento = $(elementoLi).find(".delete-trash").data("songid");
+        $.ajax({ //Coger los datos de ese id desde la base de datos
+            url: "/api/songs/" + idElemento,
+            method: "get",
+            success: function(data) {
+                //Obtener la url de este elemento para poder reproducirlo
+                var url;
+                url = data.url;
+                //Ahora poner esa url en el elemento audio 
+                elementoAudio.attr("src", url);
+            }
+        });
+    });
+
+}); //fin del $(document).ready()

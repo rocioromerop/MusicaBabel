@@ -59,7 +59,7 @@ button {
   text-align:center;
 }
  
-body {
+body{
   margin: 0;
 	background-color: @body-color;
   &.show_form{
@@ -73,9 +73,9 @@ body {
       });
     }
     audio{
-      display: none;
+      display: inline-block;
       .if-is-desktop({
-        display: block;
+        display: inline-block;
         });
     }
   }
@@ -91,11 +91,14 @@ body {
 
   &.show_reproductor{
     audio{
-      display: block;
+      display: inline-block;
     }
-
   }
+}
 
+main{
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 
