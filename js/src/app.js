@@ -268,17 +268,17 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
        var elementoAReproducir= $(elementoReproducido).next("li");
        $(elementoAReproducir).addClass("reproduciendo");
        var urlNueva=$(elementoAReproducir).find(".delete-trash").data("url");
+       console.log("en el bind");
        playSong(urlNueva);
-
     });
 
-
-    botonNext.on("click", function(){
-       var elementoReproducido =  $(lista).find(".reproduciendo");
-       $(elementoReproducido).removeClass("reproduciendo");
-       var elementoAReproducir= $(elementoReproducido).next("li");
-       $(elementoAReproducir).addClass("reproduciendo");
-       var urlNueva=$(elementoAReproducir).find(".delete-trash").data("url");
-       playSong(urlNueva);
+    botonNext.on("click", function(evento){
+        var elementoReproducido =  $(lista).find(".reproduciendo");
+        var elementoAReproducir= $(elementoReproducido).next("li");
+        $(elementoReproducido).removeClass("reproduciendo");
+        $(elementoAReproducir).addClass("reproduciendo");
+        var urlNueva=$(elementoAReproducir).find(".delete-trash").data("url");
+        console.log("en el click del boton next", evento);
+        playSong(urlNueva);
     });
 }); //fin del $(document).ready()
