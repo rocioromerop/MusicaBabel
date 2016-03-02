@@ -126,6 +126,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
             success: function(data) {
                 console.log("Canciones recuperadas", data);
                 var html = "";
+                html += "<h2>Tu música </h2>";
                 html += '<ul>';
                 for (var i in data) {
                     var artist = data[i].artist;
@@ -139,8 +140,13 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     html += '<div class="col-phone-6">';
                     html += '<div class="data">';
                     html += '<i class="fa fa-music"></i>' + " ";
-                    html += artist + " ";
+                    html += '<label>'
                     html += song + " ";
+                     html += '</label>'
+                     html += '<label>'
+                   
+                     html += artist + " ";
+                     html += '</label>'
                     html += '</div>';
                     html += '</div>';
                     html += '<div class="col-phone-6">';

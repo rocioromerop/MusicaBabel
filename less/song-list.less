@@ -1,14 +1,46 @@
+h2 {
+    font-family: @titles-font-family;
+    color: white;
+    margin: 0;
+    text-align: left;
+    padding-left: 10px;
+    background-color: @second;
+}
 ul {
     list-style-type: none;
-    padding: 0 0 0 0;
+    padding: 0;
+    margin:0;
     li {
-        font-size: 20px;
+        
+        font-family: @body-font-family;
         overflow: hidden;
-        i {
-            color: @main;
+        background-color: white;
+        border-radius: 0px;
+        margin-top: 0px;
+        border-width: 0 1px 1px 1px;
+        border-style: solid;
+        border-color:@gray;
+        transition: background-color 250ms;
+        &:hover{
+            background-color: @gray-light;
         }
+
+        i {
+            color: @mark;
+    
+        }
+
+    label{
+        border-right:1px solid @gray;
+        overflow: hidden;
+        padding: 0 10px 0 10px;
+
+    }
+
     .data{
     	.left-align();
+       overflow:hidden;
+       text-overflow: ellipsis;
     	margin: 10px 10px 10px 10px;
     }
 

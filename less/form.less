@@ -20,7 +20,7 @@ input[type=text],input[type=password],input[type=url]{
   font-size: 17px;
   font-weight: bold;
   box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
-  border:2px solid @gray-light;
+  border:2px solid @gray;
   margin-top: 20px; 
   padding-left: 10px;
   background: none;
@@ -28,7 +28,7 @@ input[type=text],input[type=password],input[type=url]{
   &:focus {
 
     outline:0;
-    border-color:@main;
+    border-color:@mark;
 
   }
 }
@@ -48,10 +48,10 @@ button {
   margin: 15px 0 15px 0;
   padding: 15px 5px 15px 5px;
   background:@main;
-  color:@white;
+  color:white;
   transition:all.5s ease;
   &:hover, &:focus {
-    background:@main-dark;
+    background:@second;
   }
 }
 
@@ -61,7 +61,7 @@ button {
  
 body {
   margin: 0;
-	background-color: @body-color;
+	background-color: white;
   &.show_form{
     form{
       display: block;
@@ -73,9 +73,9 @@ body {
       });
     }
     audio{
-      display: none;
+      display: inline-block;
       .if-is-desktop({
-        display: block;
+        display: inline-block;
         });
     }
   }
@@ -91,7 +91,7 @@ body {
 
   &.show_reproductor{
     audio{
-      display: block;
+      display: inline-block;
     }
 
   }
