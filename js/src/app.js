@@ -8,7 +8,6 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     var controlMostrarForm = false; //Para controlar si se ha pulsado ya anteriormente el botón de +  
     var elementoAudio = $("audio");
     var body = $("body");
-
     body.addClass("show_list");
     body.addClass("show_reproductor");
     reloadLista();
@@ -132,9 +131,10 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     var song = data[i].song;
                     var url = data[i].url || "";
                     var id = data[i].id;
+                    html += '<li>';
                     html += '<div class="container">';
                     html += '<div class="row">';
-                    html += '<li>';
+                    
                     html += '<div class="col-phone-6">';
                     html += '<div class="data">';
                     html += '<i class="fa fa-music"></i>' + " ";
@@ -149,9 +149,10 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     html += ' <i class="fa fa-trash delete-trash fa-lg" data-songid="' + id + '" data-url="' + url + '"></i>';
                     html += '</div>';
                     html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    
                     html += ' </li>';
-                    html += '</div>';
-                    html += '</div>';
                 }
                 html += '</ul>';
                 lista.html(html); // innerHTML=html
@@ -195,16 +196,24 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 $("#elementoId").val(idElemento);
             }
         });
-
         body.addClass("show_form");
         body.removeClass("show_list");
-        body.removeClass("show_reproductor");
-        
+        body.removeClass("show_reproductor"); 
     });
+
+    function playSong(url){
+        elementoAudio.attr("src", url);
+ 
+        console.log("playSong()", url);
+    }
+
 
     $(".lista").on("click", ".play-button", function() { //Para que el botón del play reproduzca la canción
         var elementoI = this;
         var idElemento = $(elementoI).data("songid");
+        var elementoLi = $(elementoI).parents("li");
+        $(elementoLi).addClass("reproduciendo");
+
         $.ajax({ //Coger los datos de ese id desde la base de datos
             url: "/api/songs/" + idElemento,
             method: "get",
@@ -213,7 +222,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 var url;
                 url = data.url;
                 //Ahora poner esa url en el elemento audio 
-                elementoAudio.attr("src", url);
+                playSong(url);
             }
         });
     });
@@ -223,17 +232,28 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     $(".lista").on("dblclick", "li", function(){
         var elementoLi = this;
         var idElemento = $(elementoLi).find(".delete-trash").data("songid");
+        $(elementoLi).addClass("reproduciendo");
         $.ajax({ //Coger los datos de ese id desde la base de datos
             url: "/api/songs/" + idElemento,
             method: "get",
             success: function(data) {
                 //Obtener la url de este elemento para poder reproducirlo
                 var url;
-                url = data.url;
+                url = data.url;                
                 //Ahora poner esa url en el elemento audio 
-                elementoAudio.attr("src", url);
+                playSong(url);
             }
         });
+    });
+
+
+    $(elementoAudio).bind("ended", function(){
+       var elementoReproducido =  $(lista).find(".reproduciendo");
+       $(elementoReproducido).removeClass("reproduciendo");
+       var elementoAReproducir=$(elementoReproducido).next("li");
+       $(elementoAReproducir).addClass("reproduciendo");
+       var urlNueva=$(elementoAReproducir).find(".delete-trash").data("url");
+       playSong(urlNueva);
     });
 
 }); //fin del $(document).ready()
