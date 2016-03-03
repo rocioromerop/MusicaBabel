@@ -10,6 +10,9 @@
 </head>
 
 <body>
+    <div class="loaderContainer">
+        <div class="loaderMessage">Cargando...</div>
+    </div>
     <header class="web header">
         <div class="container">
             <div class="row">
@@ -45,20 +48,29 @@
         </div>
     </main>
     <footer class="web footer">
-        <div class="container audio">
-            <audio controls autoplay>
-            </audio>
-        </div>
-        <button class="nextButtonwrapper">
-            <i class="fa fa-step-forward fa-2x nextButton"></i>
-        </button>
-
-         <button class="prevButtonwrapper">
-            <i class="fa fa-step-backward fa-2x previousButton"></i>
-        </button>
-    </footer>
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="js/src/app.js"></script>
+       <div class="container">
+           <div class="row">
+               <div class="col-phone-4">
+                   <button class="prevButtonwrapper">
+                       <i class="fa fa-step-backward fa-2x previousButton"></i>
+                   </button>
+               </div>
+               <div class="col-phone-4">
+                   <div class="container audio">
+                       <audio controls autoplay>
+                       </audio>
+                   </div>
+               </div>
+               <div class="col-phone-4">
+                   <button class="nextButtonwrapper">
+                       <i class="fa fa-step-forward fa-2x nextButton"></i>
+                   </button>
+               </div>
+           </div>
+       </div>
+   </footer>
+   <script src="bower_components/jquery/dist/jquery.min.js"></script>
+   <script src="js/src/app.js"></script>
 </body>
 
 </html>

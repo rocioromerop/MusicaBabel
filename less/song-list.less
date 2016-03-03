@@ -17,9 +17,11 @@ ul {
         background-color: white;
         border-radius: 0px;
         margin-top: 0px;
+        
         border-width: 0 1px 1px 1px;
         border-style: solid;
         border-color: @gray;
+        
         transition: background-color 250ms;
         &:hover {
             background-color: @gray-light;
@@ -31,9 +33,11 @@ ul {
             color: @mark;
         }
         label {
-            border-width: 0 1px 0 1px;
-            border-style: solid;
-            border-color: @gray;
+            .if-is-desktop({
+                border-width: 0 1px 0 1px;
+                border-style: solid;
+                border-color: @gray;
+            });
             overflow: hidden;
             padding: 0 10px 0 10px;
         }
