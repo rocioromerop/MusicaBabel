@@ -1,0 +1,38 @@
+.if-is-desktop(@rules){
+  @media screen and (min-width:(@mobile-width + 1)){
+    @rules();
+  }
+}
+
+.clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.right-align(){
+  text-align: right;
+}
+
+.left-align(){
+  text-align: left;
+}
+
+
+.horizontal-list(){ //No se genera CSS: Clase abstracta
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	li{ display: inline; }
+}
+
+.img-responsive(){
+	position: relative;
+	width: 100%;
+	max-width: 100%;
+}
