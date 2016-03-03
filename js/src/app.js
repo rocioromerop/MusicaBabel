@@ -9,6 +9,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     var elementoAudio = $("audio");
     var body = $("body");
     var botonNext = $(".nextButton");
+    var previousButton = $(".previousButton");
     body.addClass("show_list");
     body.addClass("show_reproductor");
     reloadLista();
@@ -208,10 +209,27 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         body.removeClass("show_reproductor");
     });
 
-    function playSong(url) {
+    function playSong(url, elementoListaAReproducir) {
+        if($(elementoListaAReproducir).prev("li").length == 0){
+            previousButton.parent().attr("disabled",true);
+        }
+        else {
+            previousButton.parent().removeAttr("disabled");
+        }
+        if($(elementoListaAReproducir).next("li").length == 0){
+            botonNext.parent().attr("disabled",true);
+        }
+        else {
+            botonNext.parent().removeAttr("disabled");
+        }
+
+        if($(elementoListaAReproducir).prev("li").length == 0 && $(elementoListaAReproducir).next("li").length == 0){
+            botonNext.parent().attr("disabled",true);
+            previousButton.parent().attr("disabled",true);
+        }
+
         elementoAudio.attr("src", url);
 
-        console.log("playSong()", url);
     }
 
 
@@ -220,7 +238,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         var idElemento = $(elementoI).data("songid");
         var elementoLi = $(elementoI).parents("li");
 
-        var elementoConReproduciendo=$(".lista").find(".reproduciendo");
+        var elementoConReproduciendo = $(".lista").find(".reproduciendo");
 
         elementoConReproduciendo.removeClass("reproduciendo");
         $(elementoLi).addClass("reproduciendo");
@@ -233,7 +251,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 var url;
                 url = data.url;
                 //Ahora poner esa url en el elemento audio 
-                playSong(url);
+                playSong(url, elementotoLi);
             }
         });
     });
@@ -244,7 +262,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         var elementoLi = this;
         var idElemento = $(elementoLi).find(".delete-trash").data("songid");
 
-        var elementoConReproduciendo=$(".lista").find(".reproduciendo");
+        var elementoConReproduciendo = $(".lista").find(".reproduciendo");
 
         elementoConReproduciendo.removeClass("reproduciendo");
         $(elementoLi).addClass("reproduciendo");
@@ -257,41 +275,41 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 var url;
                 url = data.url;
                 //Ahora poner esa url en el elemento audio 
-                playSong(url);
+                playSong(url, elementoLi);
             }
         });
     });
 
-    $(elementoAudio).bind("ended", function(){
-       var elementoReproducido =  $(lista).find(".reproduciendo");
-       $(elementoReproducido).removeClass("reproduciendo");
-       var elementoAReproducir= $(elementoReproducido).next("li");
-       $(elementoAReproducir).addClass("reproduciendo");
-       var urlNueva=$(elementoAReproducir).find(".delete-trash").data("url");
-       playSong(urlNueva);
+    $(elementoAudio).bind("ended", function() {
+        var elementoReproducido = $(lista).find(".reproduciendo");
+        $(elementoReproducido).removeClass("reproduciendo");
+        var elementoAReproducir = $(elementoReproducido).next("li");
+        $(elementoAReproducir).addClass("reproduciendo");
+        var urlNueva = $(elementoAReproducir).find(".delete-trash").data("url");
+        playSong(urlNueva);
 
     });
 
 
-    botonNext.on("click", function(){
-       var elementoReproducido =  $(lista).find(".reproduciendo");
-       $(elementoReproducido).removeClass("reproduciendo");
-       var elementoAReproducir= $(elementoReproducido).next("li");
-       $(elementoAReproducir).addClass("reproduciendo");
-       var urlNueva=$(elementoAReproducir).find(".delete-trash").data("url");
-       playSong(urlNueva);
+    botonNext.on("click", function() {
+        var elementoReproducido = $(lista).find(".reproduciendo");
+        $(elementoReproducido).removeClass("reproduciendo");
+        var elementoAReproducir = $(elementoReproducido).next("li");
+        $(elementoAReproducir).addClass("reproduciendo");
+        var urlNueva = $(elementoAReproducir).find(".delete-trash").data("url");
+        playSong(urlNueva, elementoAReproducir);
     });
 
 
-    previousButton("click", function(){
-        var elementoReproducido =  $(lista).find(".reproduciendo");
-        
-            $(elementoReproducido).removeClass("reproduciendo");
-            var elementoAReproducir= $(elementoReproducido).prev("li");
-            elementoAReproducir.addClass("reproduciendo");
-            playSong(urlNueva);
+    previousButton.on("click", function() {
+        var elementoReproducido = $(lista).find(".reproduciendo");
+        $(elementoReproducido).removeClass("reproduciendo");
+        var elementoAReproducir = $(elementoReproducido).prev("li");
+        elementoAReproducir.addClass("reproduciendo");
+        var urlNueva = $(elementoAReproducir).find(".delete-trash").data("url");
+        playSong(urlNueva, elementoAReproducir);
 
-         
 
-    })
+
+    });
 }); //fin del $(document).ready()
