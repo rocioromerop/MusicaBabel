@@ -9,6 +9,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     var elementoAudio = $("audio");
     var body = $("body");
     var botonNext = $(".nextButton");
+    var previousButton= $(".previousButton");
     body.addClass("show_list");
     body.addClass("show_reproductor");
     reloadLista();
@@ -208,16 +209,26 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     });
 
     function playSong(url, elementoListaAReproducir) {
-        if($(elementoListaAReproducir).next("li").length==0){
-            botonNext.parent().attr("disabled", true);
-            console.log("se bloquea el boton");
-        }
-        else{
-            botonNext.parent().removeAttr("disabled");
-            console.log("se desbloquea el boton");
-        }
-        elementoAudio.attr("src", url);
-        console.log("playSong()", url);
+
+        if($(elementoListaAReproducir).prev("li").length == 0){
+           previousButton.parent().attr("disabled", true);
+       }
+       else {
+           previousButton.parent().removeAttr("disabled");
+       }
+       if($(elementoListaAReproducir).next("li").length == 0){
+           botonNext.parent().attr("disabled",true);
+       }
+       else {
+           botonNext.parent().removeAttr("disabled");
+       }
+
+       if($(elementoListaAReproducir).prev("li").length == 0 && $(elementoListaAReproducir).next("li").length == 0){
+           botonNext.parent().attr("disabled",true);
+           previousButton.parent().attr("disabled",true);
+       }
+       elementoAudio.attr("src", url);
+       console.log("playSong()", url);
     }
 
 
@@ -261,6 +272,6 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         $(elementoAReproducir).addClass("reproduciendo");
         var urlNueva=$(elementoAReproducir).find(".delete-trash").data("url");
         console.log("en el click del boton next", evento);
-        playSong(urlNueva);
+        playSong(urlNueva, elementoAReproducir);
     });
 }); //fin del $(document).ready()
