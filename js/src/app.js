@@ -144,7 +144,6 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     html += song + " ";
                     html += '</label>'
                     html += '<label>'
-
                     html += artist + " ";
                     html += '</label>'
                     html += '</div>';
@@ -208,58 +207,41 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         body.removeClass("show_reproductor");
     });
 
-    function playSong(url) {
+    function playSong(url, elementoListaAReproducir) {
+        if($(elementoListaAReproducir).next("li").length==0){
+            botonNext.parent().attr("disabled", true);
+            console.log("se bloquea el boton");
+        }
+        else{
+            botonNext.parent().removeAttr("disabled");
+            console.log("se desbloquea el boton");
+        }
         elementoAudio.attr("src", url);
-
         console.log("playSong()", url);
     }
 
 
     $(".lista").on("click", ".play-button", function() { //Para que el botón del play reproduzca la canción
         var elementoI = this;
-        var idElemento = $(elementoI).data("songid");
+        var urlElemento = $(elementoI).data("url");
         var elementoLi = $(elementoI).parents("li");
-
         var elementoConReproduciendo=$(".lista").find(".reproduciendo");
-
         elementoConReproduciendo.removeClass("reproduciendo");
         $(elementoLi).addClass("reproduciendo");
-
-        $.ajax({ //Coger los datos de ese id desde la base de datos
-            url: "/api/songs/" + idElemento,
-            method: "get",
-            success: function(data) {
-                //Obtener la url de este elemento para poder reproducirlo
-                var url;
-                url = data.url;
-                //Ahora poner esa url en el elemento audio 
-                playSong(url);
-            }
-        });
+        playSong(urlElemento, elementoLi);
     });
 
     // Para que al hacer doble click en el elemento de la lista se reproduzca la canción
 
     $(".lista").on("dblclick", "li", function() {
         var elementoLi = this;
-        var idElemento = $(elementoLi).find(".delete-trash").data("songid");
-
+        console.log("quien es doble click:", this);
+        var urlElemento = $(elementoLi).find(".delete-trash").data("url");
         var elementoConReproduciendo=$(".lista").find(".reproduciendo");
-
         elementoConReproduciendo.removeClass("reproduciendo");
         $(elementoLi).addClass("reproduciendo");
-
-        $.ajax({ //Coger los datos de ese id desde la base de datos
-            url: "/api/songs/" + idElemento,
-            method: "get",
-            success: function(data) {
-                //Obtener la url de este elemento para poder reproducirlo
-                var url;
-                url = data.url;
-                //Ahora poner esa url en el elemento audio 
-                playSong(url);
-            }
-        });
+        playSong(urlElemento, elementoLi);
+        
     });
 
     $(elementoAudio).bind("ended", function(){
