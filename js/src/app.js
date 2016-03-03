@@ -9,11 +9,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     var elementoAudio = $("audio");
     var body = $("body");
     var botonNext = $(".nextButton");
-<<<<<<< HEAD
-    var previousButton= $(".previousButton");
-=======
     var previousButton = $(".previousButton");
->>>>>>> feature/button-prev
     body.addClass("show_list");
     body.addClass("show_reproductor");
     reloadLista();
