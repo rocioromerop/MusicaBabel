@@ -9,7 +9,11 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     var elementoAudio = $("audio");
     var body = $("body");
     var botonNext = $(".nextButton");
+<<<<<<< HEAD
     var previousButton= $(".previousButton");
+=======
+    var previousButton = $(".previousButton");
+>>>>>>> feature/button-prev
     body.addClass("show_list");
     body.addClass("show_reproductor");
     reloadLista();
@@ -228,7 +232,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
            previousButton.parent().attr("disabled",true);
        }
        elementoAudio.attr("src", url);
-       console.log("playSong()", url);
+      
     }
 
 
@@ -240,13 +244,13 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         elementoConReproduciendo.removeClass("reproduciendo");
         $(elementoLi).addClass("reproduciendo");
         playSong(urlElemento, elementoLi);
+
     });
 
     // Para que al hacer doble click en el elemento de la lista se reproduzca la canción
 
     $(".lista").on("dblclick", "li", function() {
         var elementoLi = this;
-        console.log("quien es doble click:", this);
         var urlElemento = $(elementoLi).find(".delete-trash").data("url");
         var elementoConReproduciendo=$(".lista").find(".reproduciendo");
         elementoConReproduciendo.removeClass("reproduciendo");
@@ -265,13 +269,27 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
        playSong(urlNueva);
     });
 
-    botonNext.on("click", function(evento){
-        var elementoReproducido =  $(lista).find(".reproduciendo");
-        var elementoAReproducir= $(elementoReproducido).next("li");
+ 
+
+
+    botonNext.on("click", function() {
+        var elementoReproducido = $(lista).find(".reproduciendo");
         $(elementoReproducido).removeClass("reproduciendo");
+        var elementoAReproducir = $(elementoReproducido).next("li");
         $(elementoAReproducir).addClass("reproduciendo");
-        var urlNueva=$(elementoAReproducir).find(".delete-trash").data("url");
-        console.log("en el click del boton next", evento);
+        var urlNueva = $(elementoAReproducir).find(".delete-trash").data("url");
         playSong(urlNueva, elementoAReproducir);
     });
+
+
+    previousButton.on("click", function() {
+        var elementoReproducido = $(lista).find(".reproduciendo");
+        $(elementoReproducido).removeClass("reproduciendo");
+        var elementoAReproducir = $(elementoReproducido).prev("li");
+        elementoAReproducir.addClass("reproduciendo");
+        var urlNueva = $(elementoAReproducir).find(".delete-trash").data("url");
+        playSong(urlNueva, elementoAReproducir);
+    });
+
+
 }); //fin del $(document).ready()
