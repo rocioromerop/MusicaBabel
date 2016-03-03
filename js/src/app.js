@@ -25,16 +25,24 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     });
 
     $(".add-button").on("click", function() {
-        $("#artist").val("");
-        $("#title").val("");
-        $("#song_url").val("");
-        $("#elementoId").val("");
+       
         if (controlMostrarForm == false) {
+            $("#artist").val("");
+            $("#title").val("");
+            $("#song_url").val("");
+            $("#cover_url").val("");
+            $("#elementoId").val("");
             body.addClass("show_form");
             body.removeClass("show_list");
             body.removeClass("show_reproductor");
             controlMostrarForm = true;
-        }else {
+        }
+        else {
+            $("#artist").val("");
+            $("#title").val("");
+            $("#song_url").val("");
+            $("#cover_url").val("");
+            $("#elementoId").val("");
             body.addClass("show_list");
             body.addClass("show_reproductor");
             body.removeClass("show_form");
@@ -46,6 +54,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         $("#artist").val("");
         $("#title").val("");
         $("#song_url").val("");
+        $("#cover_url").val("");
         $("#elementoId").val("");
         body.addClass("show_list");
         body.removeClass("show_form");
@@ -73,6 +82,16 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
             alert("La url de la canción no es válida");
             return false;
         }
+
+
+        var coverUrl = $.trim($("#cover_url").val());
+
+        var pattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/ig;
+        if (pattern.test(coverUrl) == false) {
+            alert("La url de la portada no es válida");
+            return false;
+        }
+
         if (id == "") { //Se va a añadir una nueva
             $.ajax({
                 method: 'post',
@@ -80,7 +99,8 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 data: JSON.stringify({
                     artist: artist,
                     song: song,
-                    url: url
+                    url: url,
+                    coverUrl: coverUrl
                 }),
                 
                 success: function() {
@@ -101,7 +121,8 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 data: JSON.stringify({
                     artist: artist,
                     song: song,
-                    url: url
+                    url: url,
+                    coverUrl: coverUrl
                 }),
                 success: function() {
                     reloadLista();
@@ -113,6 +134,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     $("#artist").val("");
                     $("#title").val("");
                     $("#song_url").val("");
+                    $("#cover_url").val("");
                     $("#elementoId").val("");
                 },
                 error: function() {
@@ -135,13 +157,20 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     var artist = data[i].artist;
                     var song = data[i].song;
                     var url = data[i].url || "";
+                    var coverUrl = data[i].coverUrl || "";
                     var id = data[i].id;
                     html += '<li>';
                     html += '<div class="container">';
                     html += '<div class="row">';
                     html += '<div class="col-phone-6">';
                     html += '<div class="data">';
-                    html += '<i class="fa fa-music"></i>' + " ";
+                    html += '<div class="img-wrapper">';
+                    if (coverUrl == "") {
+                        html += '<i class="fa fa-music"></i>' + " ";
+                    } else {
+                        html += '<img src="' + coverUrl + '"/>'
+                    }
+                    html += '</div>';
                     html += '<label>'
                     html += song + " ";
                     html += '</label>'
@@ -216,6 +245,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     });
 
     function playSong(url, elementoListaAReproducir) {
+
         if ($(elementoListaAReproducir).prev("li").length == 0) {
             previousButton.parent().attr("disabled", true);
         } else {
@@ -226,12 +256,15 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         } else {
             botonNext.parent().removeAttr("disabled");
         }
+
         if ($(elementoListaAReproducir).prev("li").length == 0 && $(elementoListaAReproducir).next("li").length == 0) {
             botonNext.parent().attr("disabled", true);
             previousButton.parent().attr("disabled", true);
         }
         elementoAudio.attr("src", url);
-    };
+
+    }; //CUIDADO!!!
+
 
     $(".lista").on("click", ".play-button", function() { //Para que el botón del play reproduzca la canción
         var elementoI = this;
@@ -252,9 +285,24 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         elementoConReproduciendo.removeClass("reproduciendo");
         $(elementoLi).addClass("reproduciendo");
         playSong(urlElemento, elementoLi);
+
     });
 
+
     $(elementoAudio).bind("ended", function() {
+        var elementoReproducido = $(lista).find(".reproduciendo");
+        $(elementoReproducido).removeClass("reproduciendo");
+        var elementoAReproducir = $(elementoReproducido).next("li");
+        $(elementoAReproducir).addClass("reproduciendo");
+        var urlNueva = $(elementoAReproducir).find(".delete-trash").data("url");
+        console.log("en el bind");
+        playSong(urlNueva, elementoAReproducir);
+    });
+
+
+
+
+    botonNext.on("click", function() {
         var elementoReproducido = $(lista).find(".reproduciendo");
         $(elementoReproducido).removeClass("reproduciendo");
         var elementoAReproducir = $(elementoReproducido).next("li");
@@ -311,4 +359,5 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
             i=0;
         }
     }, 3000);
+
 }); //fin del $(document).ready()

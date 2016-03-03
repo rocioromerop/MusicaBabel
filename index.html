@@ -41,6 +41,9 @@
             <div>
                 <input type="url" id="song_url" name="song_url" placeholder="URL de la canción" pattern="^https?:ht//[a-z0-9]+\.[a-z0-9]+/.+">
             </div>
+             <div>
+                <input type="url" id="cover_url" name="cover_url" placeholder="URL de la portada" pattern="^https?:ht//[a-z0-9]+\.[a-z0-9]+/.+">
+            </div>
             <button type="submit">Añadir canción</button>
             <button type="button" class="buttonCancelar">Cancelar</button>
         </form>
@@ -48,29 +51,33 @@
         </div>
     </main>
     <footer class="web footer">
-       <div class="container">
-           <div class="row">
-               <div class="col-phone-4">
-                   <button class="prevButtonwrapper">
-                       <i class="fa fa-step-backward fa-2x previousButton"></i>
-                   </button>
-               </div>
-               <div class="col-phone-4">
-                   <div class="container audio">
-                       <audio controls autoplay>
-                       </audio>
-                   </div>
-               </div>
-               <div class="col-phone-4">
-                   <button class="nextButtonwrapper">
-                       <i class="fa fa-step-forward fa-2x nextButton"></i>
-                   </button>
-               </div>
-           </div>
-       </div>
-   </footer>
-   <script src="bower_components/jquery/dist/jquery.min.js"></script>
-   <script src="js/src/app.js"></script>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-phone-2">
+                    <div class="prebuttonContainer">
+                        <button class="prevButtonwrapper">
+                            <i class="fa fa-step-backward fa-2x previousButton"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-phone-8">
+                    <div class="containerAudio">
+                        <audio controls autoplay>
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-phone-">
+                    <div class="nextbuttonContainer">
+                        <button class="nextButtonwrapper">
+                            <i class="fa fa-step-forward fa-2x nextButton"></i>
+                        </button>
+                    </div>
+                </div>
+    </footer>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="js/src/app.js"></script>
+
 </body>
 
 </html>
