@@ -94,7 +94,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         var coverUrl = $.trim($("#cover_url").val());
 
         var pattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/ig;
-        if (pattern.test(coverUrl) == false) {
+        if (pattern.test(coverUrl) == false && coverUrl != "") {
             alert("La url de la portada no es válida");
             return false;
         }
