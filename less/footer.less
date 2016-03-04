@@ -23,20 +23,25 @@ footer {
 
 }
     .bar-wrapper{
-        border: 10px black;
+        text-align: center;
+        margin-bottom: 10px;
+       
+        
+       
     }
 
     .progressBar {
-        width: 100%;
+      width:100%;
         background-color: @main;
         height: 25px;
         text-align: center;
-        border: 2px black;
+     
     }
     .progreso {
         width: 0;
         background-color: @mark;
         height: 25px;
+
     }
 
 .prebuttonContainer {
@@ -48,9 +53,27 @@ footer {
 }
 
 button {
-    color: @darken-main;
+    color: white;
+    border-radius: 5px;
 }
 
 button[disabled] {
     color: black;
+}
+
+#volumeRange{
+    background-color: @mark;
+    border-radius: 20px;
+    width: 100%;
+    box-shadow: 7px 7px 18px -5px rgba(11, 71, 117, 1);
+    border: 0px hidden #FFC400;
+}
+
+.containerAudio{
+    text-align: right;
+}
+.containerVolume{
+    margin-top: 25px;
+    margin-right: 50px;
+    text-align: right;
 }
