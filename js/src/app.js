@@ -11,6 +11,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     var botonNext = $(".nextButton");
     var previousButton = $(".previousButton");
     var playButton = $(".playButton")
+    var pauseButton = $(".pauseButton")
     var reproducir = $(".containerAudio");
     var barra = $(".progressBar");
     var progreso = $(".progreso");
@@ -172,16 +173,16 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     html += '<div class="data">';
                     html += '<div class="container">';
                     html += '<div class="row">';
-                    html += '<div class="col-phone-3">';
+                    html += '<div class="col-phone-3 col-desktop-2">';
                     html += '<p class="img-wrapper">';
                     if (coverUrl == "") {
-                        html += '<i class="fa fa-music"></i>' + " ";
+                        html += '<i class="fa fa-music fa-lg"></i>' + " ";
                     } else {
                         html += '<img src="' + coverUrl + '"/>';
                     }
                     html += '</p>';
                     html += '</div>';
-                    html += '<div class="col-phone-9">';
+                    html += '<div class="col-phone-9 col-desktop-10">';
                     html += '<p class="label-wrapper"';
                     html += '<label>'
                     html += song + " ";
@@ -378,17 +379,21 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     }, 3000);
 
     //Funciones del reproductor
-    playButton.on("click", function() {
+    pauseButton.on("click", function() {
         var player = document.getElementById('player');
         if (playing == true) {
             player.pause();
             playing = false;
         }
-        else {
-            player.play();
-            playing =true;
-        }
     });
+
+    playButton.on("click", function() {
+        var player = document.getElementById('player');
+        if (playing == false) {
+            player.play();
+            playing = true;
+        }
+    })
 
 
     var player = document.getElementById('player');
@@ -404,5 +409,13 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         var barraVolumenValor = barraVolumen[0].value;
         $("audio")[0].volume = ( barraVolumenValor / 10);
     });
+
+    barra.on("click", function(e) {
+        var percent = e.offsetX / this.offsetWidth;
+        player.currentTime = percent * player.duration;
+        progreso.value = percent / 100;
+    });
+
+
 
 }); //fin del $(document).ready()
