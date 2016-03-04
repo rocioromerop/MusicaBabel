@@ -1,23 +1,29 @@
     // Layout container
-.container {
-    width: 100%;
-    margin: auto;
-}
-
-//grid 
-.grid-generator(@columns, @i: 1) when (@i <= @columns) {
-    .col-phone-@{i}
-    {
-        width: @i * (100% / @columns);
-        float: left;
-        display: block;
-        .clearfix();
+    .container {
+        width: 100%;
+        margin: auto;
     }
-    .grid-generator(@columns, (@i + 1));
-}
-
-.row {
-    .clearfix();
-    .grid-generator(12);
-    //div[class*="col-"]:nth-child(odd){ background: #999999}
-}
+    
+    //grid 
+    .grid-generator(@columns, @prefix, @i: 1) when (@i <=@columns) {
+        .col-@{prefix}-@{i}
+        { 
+            width: @i * (100% / @columns);
+            float: left;
+            display: block;
+            .clearfix();
+        }
+        .grid-generator(@columns, @prefix, (@i + 1));
+    }
+    
+    .row {
+        .clearfix();
+        @prefix: phone;
+        .grid-generator(12, @prefix);
+        @media screen and (min-width: (@mobile-width + 1)) {
+            @prefix: desktop;
+           .grid-generator(12, @prefix);
+        }
+        
+        //div[class*="col-"]:nth-child(odd){ background: #999999}
+    }
