@@ -10,22 +10,28 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
     var body = $("body");
     var botonNext = $(".nextButton");
     var previousButton = $(".previousButton");
+    var playButton = $(".playButton")
+    var reproducir = $(".containerAudio");
+    var barra = $(".progressBar");
+    var progreso = $(".progreso");
+    var playing = false;
     body.addClass("show_list");
     botonNext.parent().attr("disabled", true);
     previousButton.parent().attr("disabled", true);
     reloadLista();
-    $.ajaxSetup({dataType: 'json',
-                contentType: 'application/json', 
-                beforeSend: function(){
-                    body.addClass("error_msg");
-                },
-                complete: function(){
-                    body.removeClass("error_msg");
-                }
+    $.ajaxSetup({
+        dataType: 'json',
+        contentType: 'application/json',
+        beforeSend: function() {
+            body.addClass("error_msg");
+        },
+        complete: function() {
+            body.removeClass("error_msg");
+        }
     });
 
     $(".add-button").on("click", function() {
-       
+
         if (controlMostrarForm == false) {
             $("#artist").val("");
             $("#title").val("");
@@ -36,8 +42,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
             body.removeClass("show_list");
             body.removeClass("show_reproductor");
             controlMostrarForm = true;
-        }
-        else {
+        } else {
             $("#artist").val("");
             $("#title").val("");
             $("#song_url").val("");
@@ -102,7 +107,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     url: url,
                     coverUrl: coverUrl
                 }),
-                
+
                 success: function() {
                     body.addClass("show_list");
                     body.removeClass("show_form");
@@ -162,25 +167,35 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                     html += '<li>';
                     html += '<div class="container">';
                     html += '<div class="row">';
-                    html += '<div class="col-phone-6">';
+                    html += '<div class="col-phone-9">';
                     html += '<div class="data">';
-                    html += '<div class="img-wrapper">';
+                    html += '<div class="container">';
+                    html += '<div class="row">';
+                    html += '<div class="col-phone-3">';
+                    html += '<p class="img-wrapper">';
                     if (coverUrl == "") {
                         html += '<i class="fa fa-music"></i>' + " ";
                     } else {
-                        html += '<img src="' + coverUrl + '"/>'
+                        html += '<img src="' + coverUrl + '"/>';
                     }
+                    html += '</p>';
                     html += '</div>';
+                    html += '<div class="col-phone-9">';
+                    html += '<p class="label-wrapper"';
                     html += '<label>'
                     html += song + " ";
                     html += '</label>'
                     html += '<label>'
                     html += artist + " ";
                     html += '</label>'
+                    html += '</p>';
                     html += '</div>';
                     html += '</div>';
-                    html += '<div class="col-phone-6">';
-                    html += '<div class="icon">';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div class="col-phone-3">';
+                    html += '<div class="icon-wrapper">';
                     html += ' <i class="fa fa-play-circle play-button fa-lg" data-songid="' + id + '" data-url="' + url + '"></i>';
                     html += ' <i class="fa fa-pencil modify-pencil fa-lg" data-songid="' + id + '" data-url="' + url + '"></i>';
                     html += ' <i class="fa fa-trash delete-trash fa-lg" data-songid="' + id + '" data-url="' + url + '"></i>';
@@ -194,8 +209,8 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 lista.html(html); // innerHTML=html
             },
             error: function() {
-                    alert("Se ha producido un error");
-                }
+                alert("Se ha producido un error");
+            }
         });
     }
 
@@ -209,8 +224,8 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 $(self).parents("li").remove();
             },
             error: function() {
-                    alert("Se ha producido un error");
-                }
+                alert("Se ha producido un error");
+            }
         });
     });
 
@@ -236,8 +251,8 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
                 $("#elementoId").val(idElemento);
             },
             error: function() {
-                    alert("Se ha producido un error");
-                }
+                alert("Se ha producido un error");
+            }
         });
         body.addClass("show_form");
         body.removeClass("show_list");
@@ -262,6 +277,7 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
             previousButton.parent().attr("disabled", true);
         }
         elementoAudio.attr("src", url);
+        playing = true;
 
     }; //CUIDADO!!!
 
@@ -306,12 +322,11 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
         var elementoReproducido = $(lista).find(".reproduciendo");
         $(elementoReproducido).removeClass("reproduciendo");
         var elementoAReproducir = $(elementoReproducido).next("li");
-        if(elementoAReproducir.length != 0){
+        if (elementoAReproducir.length != 0) {
             $(elementoAReproducir).addClass("reproduciendo");
             var urlNueva = $(elementoAReproducir).find(".delete-trash").data("url");
             playSong(urlNueva, elementoAReproducir);
-        }
-        else{
+        } else {
             botonNext.parent().attr("disabled", true);
             previousButton.parent().attr("disabled", true);
         }
@@ -319,6 +334,8 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
 
     $(".nextButtonwrapper").on("click", function(evt) {
         prevAndNext("next");
+        console.log("Evento de siguiente:", evt);
+
     });
 
     $(".prevButtonwrapper").on("click", function(evt) {
@@ -341,23 +358,47 @@ $(document).ready(function() { //Cuando la página se ha cargado por completo
 
     //Cada 3 segundos que compruebe si no hay ninguna canción seleccionada y que desactive los botones de next y prev
 
-    var intervalId = setInterval(function () {
+    var intervalId = setInterval(function() {
         //pero si es el ultimo elemento, que no lo borre..
-        if($(lista).find(".reproduciendo").length!=0 && $(lista).find(".reproduciendo").next("li").length==0){
-            botonNext.parent().attr("disabled", true); 
+        if ($(lista).find(".reproduciendo").length != 0 && $(lista).find(".reproduciendo").next("li").length == 0) {
+            botonNext.parent().attr("disabled", true);
         }
-        if($(lista).find(".reproduciendo").length!=0 && $(lista).find(".reproduciendo").prev("li").length==0){
-            previousButton.parent().attr("disabled", true); 
+        if ($(lista).find(".reproduciendo").length != 0 && $(lista).find(".reproduciendo").prev("li").length == 0) {
+            previousButton.parent().attr("disabled", true);
         }
-        if($(lista).find(".reproduciendo").length==0){
+        if ($(lista).find(".reproduciendo").length == 0) {
             botonNext.parent().attr("disabled", true);
             previousButton.parent().attr("disabled", true);
         }
         i++;
-        if (i > 3){
-            clearInterval( intervalId ); // finaliza el interval
-            i=0;
+        if (i > 3) {
+            clearInterval(intervalId); // finaliza el interval
+            i = 0;
         }
     }, 3000);
+
+    //Funciones del reproductor
+    playButton.on("click", function() {
+        var player = document.getElementById('player');
+        if (playing == true) {
+            player.pause();
+            playing = false;
+        }
+        else {
+            player.play();
+            playing =true;
+        }
+    });
+
+
+
+    var player = document.getElementById('player');
+    player.addEventListener("timeupdate", function() {
+        var currentTime = player.currentTime;
+        var duration = player.duration;
+        $('.progreso').stop(true, true).animate({ 'width': (currentTime + .25) / duration * 100 + '%' }, 250, 'linear');
+    });
+
+
 
 }); //fin del $(document).ready()

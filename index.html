@@ -41,43 +41,36 @@
             <div>
                 <input type="url" id="song_url" name="song_url" placeholder="URL de la canción" pattern="^https?:ht//[a-z0-9]+\.[a-z0-9]+/.+">
             </div>
-             <div>
+            <div>
                 <input type="url" id="cover_url" name="cover_url" placeholder="URL de la portada" pattern="^https?:ht//[a-z0-9]+\.[a-z0-9]+/.+">
             </div>
-            <button type="submit">Añadir canción</button>
-            <button type="button" class="buttonCancelar">Cancelar</button>
+            <button id="button-add" type="submit">Añadir canción</button>
+            <button id="button-can" type="button" class="buttonCancelar">Cancelar</button>
         </form>
         <div class="container lista">
         </div>
     </main>
     <footer class="web footer">
-
-        <div class="container">
-            <div class="row">
-                <div class="col-phone-2">
-                    <div class="prebuttonContainer">
-                        <button class="prevButtonwrapper">
-                            <i class="fa fa-step-backward fa-2x previousButton"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="col-phone-8">
-                    <div class="containerAudio">
-                        <audio controls autoplay>
-                        </audio>
-                    </div>
-                </div>
-                <div class="col-phone-">
-                    <div class="nextbuttonContainer">
-                        <button class="nextButtonwrapper">
-                            <i class="fa fa-step-forward fa-2x nextButton"></i>
-                        </button>
-                    </div>
-                </div>
+        <div class="containerAudio">
+                <audio id="player" autoplay></audio>
+                    <button class="prevButtonwrapper">
+                        <i class="fa fa-step-backward fa-lg previousButton"></i>
+                    </button>
+                    <button class="playButtonwrapper">
+                        <i class="fa fa-play fa-lg playButton"></i>
+                    </button>
+                    <button class="nextButtonwrapper">
+                        <i class="fa fa-step-forward fa-lg nextButton"></i>
+                    </button>
+                    
+            </div>
+            <div class="progressBar">
+                <div class="progreso"></div>
+            </div>
+        </div>
     </footer>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="js/src/app.js"></script>
-
 </body>
 
 </html>
