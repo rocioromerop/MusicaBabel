@@ -51,22 +51,31 @@
         </div>
     </main>
     <footer class="web footer">
-        <div class="containerAudio">
-
-            <audio id="player" autoplay></audio>
-            <button class="prevButtonwrapper">
-                <i class="fa fa-step-backward fa-lg previousButton"></i>
-            </button>
-            <button class="pauseButtonwrapper">
-                <i class="fa fa-pause fa-lg pauseButton"></i>
-            </button>
-            <button class="playButtonwrapper">
-                <i class="fa fa-play fa-lg playButton"></i>
-            </button>
-            <button class="nextButtonwrapper">
-                <i class="fa fa-step-forward fa-lg nextButton"></i>
-            </button>
-            <input type="range" id="volumeRange" name="volumeRange" min="0" max="10" step="1" value="5">
+        <div class="container">
+            <div class="row">
+                <div class="col-phone-6">
+                    <div class="containerAudio">
+                        <audio id="player" autoplay></audio>
+                        <button class="prevButtonwrapper">
+                            <i class="fa fa-step-backward fa-lg previousButton"></i>
+                        </button>
+                        <button class="pauseButtonwrapper">
+                            <i class="fa fa-pause fa-lg pauseButton"></i>
+                        </button>
+                        <button class="playButtonwrapper">
+                            <i class="fa fa-play fa-lg playButton"></i>
+                        </button>
+                        <button class="nextButtonwrapper">
+                            <i class="fa fa-step-forward fa-lg nextButton"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-phone-6">
+                    <div class="containerVolume">
+                        <input type="range" id="volumeRange" name="volumeRange" min="0" max="10" step="1" value="5">
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="bar-wrapper">
             <div class="progressBar">
